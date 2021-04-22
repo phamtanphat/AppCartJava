@@ -91,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         if (CreateNewUserActivity.mCredentials.getUsername() != null && CreateNewUserActivity.mCredentials.getPassword() != null) {
             if (username.equals(CreateNewUserActivity.mCredentials.getUsername()) && password.equals(CreateNewUserActivity.mCredentials.getPassword())) {
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, ListActivity.class));
             } else if (!username.equals(CreateNewUserActivity.mCredentials.getUsername())) {
                 Toast.makeText(this, "Your username is not correct", Toast.LENGTH_SHORT).show();
             } else if (!password.equals(CreateNewUserActivity.mCredentials.getPassword())) {

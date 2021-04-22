@@ -21,5 +21,9 @@
     <!--    Forgot password screen-->
     <string name="tv_title_forgot_password">Forgot Password</string>
     <string name="btn_send">Send</string>
+    <string name="btn_buy">Buy</string>
+
+    <!--    Product List screen-->
+    <string name="tv_title_list_screen">Product List</string>
 
 </resources>
