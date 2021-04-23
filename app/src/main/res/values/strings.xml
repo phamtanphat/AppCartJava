@@ -25,5 +25,7 @@
 
     <!--    Product List screen-->
     <string name="tv_title_list_screen">Product List</string>
+    <string name="string_cart">Cart</string>
+    <string name="string_payment">Payment</string>
 
 </resources>

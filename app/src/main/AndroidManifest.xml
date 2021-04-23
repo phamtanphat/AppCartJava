@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ListActivity"></activity>
+        <activity android:name=".ui.PaymentActivity"></activity>
+        <activity android:name=".ui.CartActivity" />
+        <activity
+            android:launchMode="singleTask"
+            android:name=".ui.ListActivity" />
         <activity android:name=".ui.ForgotPasswordActivity" />
         <activity android:name=".ui.CreateNewUserActivity" />
         <activity

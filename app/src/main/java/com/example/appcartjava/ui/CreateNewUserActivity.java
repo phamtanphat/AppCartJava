@@ -110,6 +110,7 @@ public class CreateNewUserActivity extends AppCompatActivity {
         } else {
             mCredentials = new Credentials(userName, password);
             Toast.makeText(this, "Create successfully", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

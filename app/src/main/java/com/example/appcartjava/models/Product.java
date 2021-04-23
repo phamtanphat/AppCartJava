@@ -2,26 +2,29 @@ package com.example.appcartjava.models;
 
 public class Product {
 
+    private int productId;
     private int productImage;
     private String productTitle;
-    private String productPrice;
-    private Boolean isAddToCart;
+    private int productPrice;
+    private int productAmount = 0;
 
     public Product() {
     }
 
-    public Product(int productImage, String productTitle, String productPrice) {
+    public Product(int productId, int productImage, String productTitle, int productPrice, int productAmount) {
+        this.productId = productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.productPrice = productPrice;
+        this.productAmount = productAmount;
     }
 
-    public Boolean getAddToCart() {
-        return isAddToCart;
+    public int getProductAmount() {
+        return productAmount;
     }
 
-    public void setAddToCart(Boolean addToCart) {
-        isAddToCart = addToCart;
+    public void setProductAmount(int productAmount) {
+        this.productAmount = productAmount;
     }
 
     public int getProductImage() {
@@ -40,11 +43,30 @@ public class Product {
         this.productTitle = productTitle;
     }
 
-    public String getProductPrice() {
+    public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(int productPrice) {
         this.productPrice = productPrice;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productImage=" + productImage +
+                ", productTitle='" + productTitle + '\'' +
+                ", productPrice='" + productPrice + '\'' +
+                ", productAmount=" + productAmount +
+                '}';
     }
 }

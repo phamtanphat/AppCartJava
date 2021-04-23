@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,11 +18,13 @@ import com.example.appcartjava.IClickBuyListener;
 import com.example.appcartjava.R;
 import com.example.appcartjava.models.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> implements Filterable {
 
     private List<Product> mListProduct;
+    private List<Product> mListProductOld;
     private Context context;
     private IClickBuyListener mIClickBuyListener;
 
@@ -30,6 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public void setProductList(List<Product> productList, IClickBuyListener listener) {
         mListProduct = productList;
+        mListProductOld = productList;
         mIClickBuyListener = listener;
         notifyDataSetChanged();
     }
@@ -51,12 +56,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(currentProduct.getProductImage())
                 .into(holder.imgProduct);
         holder.tvProductTitle.setText(currentProduct.getProductTitle());
-        holder.tvProductPrice.setText(currentProduct.getProductPrice());
+        holder.tvProductPrice.setText("$"+ currentProduct.getProductPrice() );
 
-        holder.btnBuy.setOnClickListener(v -> {
-            if (!currentProduct.getAddToCart()) {
-                mIClickBuyListener.onClickAddToCart(currentProduct);
-            }
+        holder.tvBuy.setOnClickListener(v -> {
+            mIClickBuyListener.onClickAddToCart(currentProduct);
         });
 
     }
@@ -69,19 +72,48 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return 0;
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strSearch = charSequence.toString();
+                if (strSearch.isEmpty()) {
+                    mListProduct = mListProductOld;
+                } else {
+                    List<Product> products = new ArrayList<>();
+                    for (Product product : mListProductOld) {
+                        if (product.getProductTitle().toLowerCase().contains(strSearch.toLowerCase())) {
+                            products.add(product);
+                        }
+                    }
+                    mListProduct = products;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mListProduct;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mListProduct = (List<Product>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public class ProductViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgProduct;
-        private TextView tvProductTitle;
+        private TextView tvProductTitle, tvBuy;
         private TextView tvProductPrice;
-        private Button btnBuy;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             imgProduct = itemView.findViewById(R.id.img_placeholder);
             tvProductTitle = itemView.findViewById(R.id.tv_product_title_item);
             tvProductPrice = itemView.findViewById(R.id.tv_price_item);
-            btnBuy = itemView.findViewById(R.id.btn_buy_item);
+            tvBuy = itemView.findViewById(R.id.tv_buy_item);
         }
     }
 
